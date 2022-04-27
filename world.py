@@ -1,4 +1,4 @@
-from settings import *
+from data import *
 
 
 class World(pygame.sprite.Sprite):
