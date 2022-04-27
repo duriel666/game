@@ -1,8 +1,4 @@
-import pygame
-
-vec = pygame.Vector2()
-ww = 1600
-wh = 900
+from settings import *
 
 
 class Player(pygame.sprite.Sprite):
@@ -10,10 +6,11 @@ class Player(pygame.sprite.Sprite):
         super().__init__()
         self.index = 0
         self.images = []
-        for i in range(0, 72):
+        '''for i in range(0, 72):
             self.images.append(pygame.image.load(
-                f'gfx/character/puolukka{str(i+1)}.png'))
-        self.image = self.images[self.index].convert_alpha()
+                f'gfx/plane{str(i+1)}.png'))'''
+        self.image = pygame.image.load('gfx/plane.png')
+        #self.image = self.images[self.index].convert_alpha()
         self.mask = pygame.mask.from_surface(self.image)
         self.rect = self.image.get_rect()
         self.pos = vec(pos[0], pos[1]+wh)
@@ -23,14 +20,24 @@ class Player(pygame.sprite.Sprite):
         self.score = 0
         self.keys = 0
         self.friction = -0.08
-        self.health = 3
-        self.gravity = 0.4
+        self.health = 1000
         self.acceleration = 0.4
+        self.weapons = []
 
     def move(self):
         self.acc = vec(0, self.gravity)
-        vol = 40
         key = pygame.key.get_pressed()
+
+        if key[K_a]:
+            self.acc.x = -self.acceleration
+            self.index -= 1
+            if self.index <= 0:
+                self.index = len(self.images)-1
+        if key[K_d]:
+            self.acc.x = self.acceleration
+            self.index += 1
+            if self.index >= len(self.images):
+                self.index = 0
 
         self.image = self.images[self.index]
 

@@ -1,11 +1,4 @@
-import pygame
-
-vec = pygame.Vector2()
-ww = 1600
-wh = 900
-
-gw = 1920
-gh = 1080
+from settings import *
 
 
 class World(pygame.sprite.Sprite):
