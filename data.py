@@ -6,7 +6,7 @@ pygame.init()
 pygame.font.init()
 pygame.mixer.init()
 
-vec = pygame.Vector2()
+vec = pygame.Vector2
 clock = pygame.time.Clock()
 
 ww = 1600

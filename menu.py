@@ -2,4 +2,4 @@ from game import *
 
 
 def menu():
-    start(True)
+    startgame(True)

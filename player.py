@@ -9,47 +9,60 @@ class Player(pygame.sprite.Sprite):
         '''for i in range(0, 72):
             self.images.append(pygame.image.load(
                 f'gfx/plane{str(i+1)}.png'))'''
-        self.image = pygame.image.load('gfx/plane.png')
+        self.image = pygame.image.load('gfx/plane.png').convert_alpha()
         #self.image = self.images[self.index].convert_alpha()
         self.mask = pygame.mask.from_surface(self.image)
         self.rect = self.image.get_rect()
-        self.pos = vec(pos[0], pos[1]+wh)
+        self.pos = vec(pos)
         self.vel = vec(0, 0)
         self.acc = vec(0, 0)
-        self.jumping = False
         self.score = 0
-        self.keys = 0
-        self.friction = -0.08
+        self.friction = -0.06
         self.health = 1000
-        self.acceleration = 0.4
+        self.acceleration_x = 0.8
+        self.acceleration_y = 0.5
         self.weapons = []
 
-    def move(self):
-        self.acc = vec(0, self.gravity)
+    def move_x(self):
         key = pygame.key.get_pressed()
 
-        if key[K_a]:
-            self.acc.x = -self.acceleration
-            self.index -= 1
-            if self.index <= 0:
-                self.index = len(self.images)-1
-        if key[K_d]:
-            self.acc.x = self.acceleration
-            self.index += 1
-            if self.index >= len(self.images):
-                self.index = 0
+        if self.pos.x > 40 and self.pos.x < ww-40:
+            if key[K_a]:
+                self.acc.x = -self.acceleration_x
+                '''self.index -= 1
+                if self.index <= 0:
+                    self.index = len(self.images)-1'''
+            elif key[K_d]:
+                self.acc.x = self.acceleration_x
+                '''self.index += 1
+                if self.index >= len(self.images):
+                    self.index = 0'''
+            else:
+                self.acc.x = 0
 
-        self.image = self.images[self.index]
+        #self.image = self.images[self.index]
 
         self.acc.x += self.vel.x * self.friction
-        self.vel += self.acc
-        self.pos += self.vel + self.gravity * self.acc
+        self.vel.x += self.acc.x
+        self.pos.x += self.vel.x + self.friction * self.acc.x
 
         self.rect.midbottom = self.pos
 
-        sound_volume = -self.vel.y/40
-        if sound_volume > 1:
-            sound_volume = 1
+    def move_y(self):
+        key = pygame.key.get_pressed()
+        if self.pos.y > 150 and self.pos.y < wh:
+            if key[K_w]:
+                self.acc.y = -self.acceleration_y
+            elif key[K_s]:
+                self.acc.y = self.acceleration_y
+            else:
+                self.acc.y = 0
+
+        self.acc.y += self.vel.y * self.friction
+        self.vel.y += self.acc.y
+        self.pos.y += self.vel.y + self.friction * self.acc.y
+
+        self.rect.midbottom = self.pos
 
     def jump(self):
         if not self.jumping:
