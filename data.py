@@ -15,7 +15,7 @@ gw = 1920
 gh = 1080
 
 screen = pygame.display.set_mode(((ww, wh)), pygame.RESIZABLE)
-pygame.display.set_caption('Game - 0.1')
+pygame.display.set_caption('Scrolling Shooter - v0.1')
 
 fps = 60
 black = (0,  0,  0, 200)
