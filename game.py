@@ -38,18 +38,18 @@ def startgame(run):
             elif event.type == pygame.QUIT:
                 pygame.quit()
             elif event.type == pygame.MOUSEBUTTONDOWN:
-                #if event.type == pygame.USEREVENT:
+                # if event.type == pygame.USEREVENT:
                 # autofire_on()
                 bullet = Bullet((player_one.rect.center), (mouse),
                                 50, bullet_image, 2, 980, 1)
                 bullet_list.append(bullet)
                 bullet_sprites.add(bullet)
-            '''elif event.type == pygame.MOUSEBUTTONUP:
-                #autofire_off
+            elif event.type == pygame.MOUSEBUTTONUP:
+                # autofire_off
                 bullet = Bullet((player_one.rect.center), (mouse),
                                 50, bullet_image, 2, 980, 1)
                 bullet_list.append(bullet)
-                bullet_sprites.add(bullet)'''
+                bullet_sprites.add(bullet)
         screen.fill(black)
         world_sprites.draw(screen)
         for world in worlds:
