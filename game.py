@@ -14,6 +14,7 @@ bullet_image = pygame.image.load('gfx/bullet1.png')
 
 
 def startgame(run):
+    #utofire, timer = pygame.USEREVENT+1, 100
     mouse = pygame.mouse.get_pos()
     #world = World('testi.png')
     player_one = Player(player_image, (ww/2, wh-1))
@@ -29,6 +30,7 @@ def startgame(run):
         world_sprites.add(world)
     bullet_list = []
     while run:
+        #pygame.time.set_timer(autofire, timer)
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
@@ -36,10 +38,18 @@ def startgame(run):
             elif event.type == pygame.QUIT:
                 pygame.quit()
             elif event.type == pygame.MOUSEBUTTONDOWN:
+                #if event.type == pygame.USEREVENT:
+                # autofire_on()
                 bullet = Bullet((player_one.rect.center), (mouse),
                                 50, bullet_image, 2, 980, 1)
                 bullet_list.append(bullet)
                 bullet_sprites.add(bullet)
+            '''elif event.type == pygame.MOUSEBUTTONUP:
+                #autofire_off
+                bullet = Bullet((player_one.rect.center), (mouse),
+                                50, bullet_image, 2, 980, 1)
+                bullet_list.append(bullet)
+                bullet_sprites.add(bullet)'''
         screen.fill(black)
         world_sprites.draw(screen)
         for world in worlds:
