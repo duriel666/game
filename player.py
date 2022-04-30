@@ -46,7 +46,7 @@ class Player(pygame.sprite.Sprite):
         self.vel.x += self.acc.x
         self.pos.x += self.vel.x + self.friction * self.acc.x
 
-        self.rect.midbottom = self.pos
+        self.rect.center = self.pos
 
     def move_y(self):
         key = pygame.key.get_pressed()
