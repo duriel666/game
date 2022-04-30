@@ -8,15 +8,25 @@ font = pygame.freetype.Font('stuff/NHaasGroteskTXPro-55Rg.ttf', 40)
 pygame.mouse.set_visible(False)
 cursor = pygame.image.load('gfx/cursor.png').convert_alpha()
 cursor_rect = cursor.get_rect()
+world_test_image = pygame.image.load('gfx/bg-test.png')
+player_image = pygame.image.load('gfx/plane.png')
+bullet_image = pygame.image.load('gfx/bullet1.png')
 
 
 def startgame(run):
     mouse = pygame.mouse.get_pos()
     #world = World('testi.png')
-    player_one = Player((ww/2, wh-1))
+    player_one = Player(player_image, (ww/2, wh-1))
+    worlds = []
+    worlds.append(World(world_test_image, (0, 0)))
+    worlds.append(World(world_test_image, (0, -1080)))
+    worlds.append(World(world_test_image, (0, -2160)))
     sprites = pygame.sprite.Group()
     sprites.add(player_one)
     bullet_sprites = pygame.sprite.Group()
+    world_sprites = pygame.sprite.Group()
+    for world in worlds:
+        world_sprites.add(world)
     bullet_list = []
     while run:
         for event in pygame.event.get():
@@ -27,10 +37,17 @@ def startgame(run):
                 pygame.quit()
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 bullet = Bullet((player_one.rect.center), (mouse),
-                                50, 'gfx/bullet1.png', 2, 980, 1)
+                                50, bullet_image, 2, 980, 1)
                 bullet_list.append(bullet)
                 bullet_sprites.add(bullet)
         screen.fill(black)
+        world_sprites.draw(screen)
+        for world in worlds:
+            world.scrolling(4)
+            if world.pos.y > 1080:
+                worlds.remove(world)
+                worlds.append(World(world_test_image, (0, -2160)))
+                world_sprites.add(worlds[2])
         sprites.update()
         sprites.draw(screen)
         bullet_sprites.draw(screen)
