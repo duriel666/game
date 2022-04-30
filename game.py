@@ -1,6 +1,7 @@
-from player import Player
-from world import World
+from player import *
+from world import *
 from data import *
+from weapon import *
 
 
 def startgame(run):
