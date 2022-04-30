@@ -23,7 +23,7 @@ def startgame(run):
                 pygame.quit()
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 bullet = Bullet((player_one.rect.center), (mouse),
-                                20, 'gfx/bullet1.png', 2, 1)
+                                20, 'gfx/bullet1.png', 2, 950, 1)
                 bullet_list.append(bullet)
                 bullet_sprites.add(bullet)
         screen.fill(black)
