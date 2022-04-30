@@ -5,6 +5,10 @@ from bullet import *
 
 font = pygame.freetype.Font('stuff/NHaasGroteskTXPro-55Rg.ttf', 40)
 
+pygame.mouse.set_visible(False)
+cursor = pygame.image.load('gfx/cursor.png').convert_alpha()
+cursor_rect = cursor.get_rect()
+
 
 def startgame(run):
     mouse = pygame.mouse.get_pos()
@@ -23,7 +27,7 @@ def startgame(run):
                 pygame.quit()
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 bullet = Bullet((player_one.rect.center), (mouse),
-                                20, 'gfx/bullet1.png', 2, 950, 1)
+                                50, 'gfx/bullet1.png', 2, 980, 1)
                 bullet_list.append(bullet)
                 bullet_sprites.add(bullet)
         screen.fill(black)
@@ -38,6 +42,8 @@ def startgame(run):
         player_one.move_y()
         mouse = pygame.mouse.get_pos()
         font.render_to(
-                screen, (10, 10), f'fps - {clock.get_fps():,.2f}', white)
+            screen, (10, 10), f'fps - {clock.get_fps():,.2f}', white)
+        cursor_rect.center = pygame.mouse.get_pos()  # update position
+        screen.blit(cursor, cursor_rect)
         pygame.display.flip()
         clock.tick(fps)

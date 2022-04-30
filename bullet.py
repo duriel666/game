@@ -25,7 +25,7 @@ class Bullet(pygame.sprite.Sprite):
         self.speed_y = -speed*math.sin(angle)
         image = self.image
         image2 = pygame.transform.scale(
-            image, (self.width, self.height*speed/10))
+            image, (self.width/2, self.height*speed/10/2))
         image3 = pygame.transform.rotate(image2, math.degrees(angle)+90)
         self.image = image3
 
