@@ -33,6 +33,9 @@ def startgame(run):
     for world in worlds:
         world_sprites.add(world)
     bullet_list = []
+    autofire = False
+    shooting = 0
+    fire_rate = 60
     while run:
         #pygame.time.set_timer(autofire, timer)
         for event in pygame.event.get():
@@ -42,18 +45,10 @@ def startgame(run):
             elif event.type == pygame.QUIT:
                 pygame.quit()
             elif event.type == pygame.MOUSEBUTTONDOWN:
-                # if event.type == pygame.USEREVENT:
-                # autofire_on()
-                bullet = Bullet((player_one.rect.center), (mouse),
-                                50, bullet_image, 2, 980, 1)
-                bullet_list.append(bullet)
-                bullet_sprites.add(bullet)
+                autofire = True
             elif event.type == pygame.MOUSEBUTTONUP:
-                # autofire_off
-                bullet = Bullet((player_one.rect.center), (mouse),
-                                50, bullet_image, 2, 980, 1)
-                bullet_list.append(bullet)
-                bullet_sprites.add(bullet)
+                autofire = False
+
         screen.fill(black)
         world_sprites.draw(screen)
         for world in worlds:
@@ -66,6 +61,14 @@ def startgame(run):
         sprites_flame.update(player_one.pos)
         sprites_flame.draw(screen)
         sprites.draw(screen)
+        if autofire:
+            if shooting > 100-fire_rate:
+                bullet = Bullet((player_one.rect.center), (mouse),
+                                50, bullet_image, 2, 900, 1)
+                bullet_list.append(bullet)
+                bullet_sprites.add(bullet)
+                shooting = 0
+            shooting += 1
         bullet_sprites.draw(screen)
         for bullet in bullet_list:
             bullet.update()

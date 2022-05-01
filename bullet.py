@@ -16,11 +16,11 @@ class Bullet(pygame.sprite.Sprite):
         self.damage = damage
         self.accuracy = accuracy
         accuracy_random = (random.randrange(
-            self.accuracy, 1000+1000-self.accuracy))/1000
+            -1000+self.accuracy, 1000-self.accuracy))/1000
         self.effect = effect
         dis_x = self.target.x-self.pos.x
         dis_y = self.target.y-self.pos.y
-        angle = math.atan2(-dis_y, dis_x)*accuracy_random
+        angle = math.atan2(-dis_y, dis_x)+accuracy_random
         self.speed_x = -speed*math.cos(angle)
         self.speed_y = -speed*math.sin(angle)
         image = self.image
