@@ -2,15 +2,24 @@ from data import *
 
 
 class Player(pygame.sprite.Sprite):
-    def __init__(self, player_image, pos):
+    # def __init__(self, player_image, pos):
+    def __init__(self, pos):
         super().__init__()
-        self.index = 0
+        '''self.index2 = 1
+        self.images2 = []
+        for i in range(0, 3):
+            self.images2.append(pygame.image.load(
+                f'gfx/flame{str(i+1)}.png'))
+        self.image2 = self.images2[self.index2].convert_alpha()
+        self.mask2 = pygame.mask.from_surface(self.image2)
+        self.rect2 = self.image2.get_rect()'''
+        self.index = 5
         self.images = []
-        '''for i in range(0, 72):
+        for i in range(0, 9):
             self.images.append(pygame.image.load(
-                f'gfx/plane{str(i+1)}.png'))'''
-        self.image = player_image.convert_alpha()
-        #self.image = self.images[self.index].convert_alpha()
+                f'gfx/plane{str(i+1)}.png'))
+        #self.image = player_image.convert_alpha()
+        self.image = self.images[self.index].convert_alpha()
         self.mask = pygame.mask.from_surface(self.image)
         self.rect = self.image.get_rect()
         self.pos = vec(pos)
@@ -29,18 +38,24 @@ class Player(pygame.sprite.Sprite):
         if self.pos.x > 40 and self.pos.x < ww-40:
             if key[K_a]:
                 self.acc.x = -self.acceleration_x
-                '''self.index -= 1
-                if self.index <= 0:
+                if self.index > 0:
+                    self.index -= 1
+                '''if self.index <= 0:
                     self.index = len(self.images)-1'''
             elif key[K_d]:
                 self.acc.x = self.acceleration_x
-                '''self.index += 1
-                if self.index >= len(self.images):
+                if self.index < 8:
+                    self.index += 1
+                '''if self.index >= len(self.images):
                     self.index = 0'''
             else:
                 self.acc.x = 0
+                if self.index > 4:
+                    self.index -= 1
+                if self.index < 4:
+                    self.index += 1
 
-        #self.image = self.images[self.index]
+        self.image = self.images[self.index]
 
         self.acc.x += self.vel.x * self.friction
         self.vel.x += self.acc.x
@@ -53,23 +68,42 @@ class Player(pygame.sprite.Sprite):
         if self.pos.y > 150 and self.pos.y < wh:
             if key[K_w]:
                 self.acc.y = -self.acceleration_y
+                #self.index2 = 0
             elif key[K_s]:
                 self.acc.y = self.acceleration_y
+                #self.index2 = 2
             else:
                 self.acc.y = 0
+                #self.index2 = 1
 
         self.acc.y += self.vel.y * self.friction
         self.vel.y += self.acc.y
         self.pos.y += self.vel.y + self.friction * self.acc.y
 
-        self.rect.midbottom = self.pos
+        self.rect.center = self.pos
 
-    def jump(self):
-        if not self.jumping:
-            self.jumping = True
-            self.vel.y = -17
 
-    def cancel_jump(self):
-        if self.jumping:
-            if self.vel.y < -5:
-                self.vel.y = -5
+class Flame(pygame.sprite.Sprite):
+    def __init__(self, pos):
+        super().__init__()
+        self.index = 1
+        self.images = []
+        for i in range(0, 3):
+            self.images.append(pygame.image.load(
+                f'gfx/flame{str(i+1)}.png'))
+        self.image = self.images[self.index].convert_alpha()
+        self.mask = pygame.mask.from_surface(self.image)
+        self.rect = self.image.get_rect()
+        self.pos = vec(pos)
+
+    def update(self, pos):
+        self.rect.midbottom = pos+(0, 150)
+        key = pygame.key.get_pressed()
+        if key[K_w]:
+            self.index = 0
+        elif key[K_s]:
+            self.index = 2
+        else:
+            self.index = 1
+
+        self.image = self.images[self.index]

@@ -9,7 +9,7 @@ pygame.mouse.set_visible(False)
 cursor = pygame.image.load('gfx/cursor.png').convert_alpha()
 cursor_rect = cursor.get_rect()
 world_test_image = pygame.image.load('gfx/bg-test.png')
-player_image = pygame.image.load('gfx/plane.png')
+#player_image = pygame.image.load('gfx/plane.png')
 bullet_image = pygame.image.load('gfx/bullet1.png')
 
 
@@ -17,13 +17,17 @@ def startgame(run):
     #utofire, timer = pygame.USEREVENT+1, 100
     mouse = pygame.mouse.get_pos()
     #world = World('testi.png')
-    player_one = Player(player_image, (ww/2, wh-1))
+    #player_one = Player(player_image, (ww/2, wh-1))
+    player_one = Player((ww/2, wh/2))
+    flame = Flame((ww/2, wh/2))
     worlds = []
     worlds.append(World(world_test_image, (0, 0)))
-    worlds.append(World(world_test_image, (0, -1080)))
-    worlds.append(World(world_test_image, (0, -2160)))
+    worlds.append(World(world_test_image, (0, -1081)))
+    worlds.append(World(world_test_image, (0, -2162)))
     sprites = pygame.sprite.Group()
     sprites.add(player_one)
+    sprites_flame = pygame.sprite.Group()
+    sprites_flame.add(flame)
     bullet_sprites = pygame.sprite.Group()
     world_sprites = pygame.sprite.Group()
     for world in worlds:
@@ -56,9 +60,11 @@ def startgame(run):
             world.scrolling(4)
             if world.pos.y > 1080:
                 worlds.remove(world)
-                worlds.append(World(world_test_image, (0, -2160)))
+                worlds.append(World(world_test_image, (0, -2162)))
                 world_sprites.add(worlds[2])
         sprites.update()
+        sprites_flame.update(player_one.pos)
+        sprites_flame.draw(screen)
         sprites.draw(screen)
         bullet_sprites.draw(screen)
         for bullet in bullet_list:
@@ -67,6 +73,7 @@ def startgame(run):
                 bullet_list.remove(bullet)
         player_one.move_x()
         player_one.move_y()
+        #flame.pos = player_one.pos
         mouse = pygame.mouse.get_pos()
         font.render_to(
             screen, (10, 10), f'fps - {clock.get_fps():,.2f}', white)
