@@ -49,7 +49,7 @@ def startgame(run):
             elif event.type == pygame.MOUSEBUTTONUP:
                 autofire = False
             elif event.type==pygame.MOUSEWHEEL:
-                fire_rate+=event.y
+                fire_rate+=event.y*10
 
         screen.fill(black)
         world_sprites.draw(screen)
@@ -64,7 +64,7 @@ def startgame(run):
         sprites_flame.draw(screen)
         sprites.draw(screen)
         if autofire:
-            if shooting > 100-fire_rate:
+            if shooting > 60/(fire_rate/60):
                 bullet = Bullet((player_one.rect.center), (mouse),
                                 50, bullet_image, 2, 900, 1)
                 bullet_list.append(bullet)
@@ -83,7 +83,7 @@ def startgame(run):
         font.render_to(
             screen, (10, 10), f'fps - {clock.get_fps():,.2f}', white)
         font.render_to(
-            screen, (10, 50), f'fire_rate - {fire_rate}', white)
+            screen, (10, 50), f'fire_rate - {fire_rate} per minute', white)
         cursor_rect.center = pygame.mouse.get_pos()  # update position
         screen.blit(cursor, cursor_rect)
         pygame.display.flip()
