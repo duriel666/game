@@ -84,6 +84,8 @@ def startgame(run):
             screen, (10, 10), f'fps - {clock.get_fps():,.2f}', white)
         font.render_to(
             screen, (10, 50), f'fire_rate - {fire_rate} per minute', white)
+        font.render_to(
+            screen, (10, 90), f'bullets - {len(bullet_sprites)}', white)
         cursor_rect.center = pygame.mouse.get_pos()  # update position
         screen.blit(cursor, cursor_rect)
         pygame.display.flip()
