@@ -48,6 +48,8 @@ def startgame(run):
                 autofire = True
             elif event.type == pygame.MOUSEBUTTONUP:
                 autofire = False
+            elif event.type==pygame.MOUSEWHEEL:
+                fire_rate+=event.y
 
         screen.fill(black)
         world_sprites.draw(screen)
@@ -80,6 +82,8 @@ def startgame(run):
         mouse = pygame.mouse.get_pos()
         font.render_to(
             screen, (10, 10), f'fps - {clock.get_fps():,.2f}', white)
+        font.render_to(
+            screen, (10, 50), f'fire_rate - {fire_rate}', white)
         cursor_rect.center = pygame.mouse.get_pos()  # update position
         screen.blit(cursor, cursor_rect)
         pygame.display.flip()
