@@ -30,6 +30,7 @@ def startgame(run):
     sprites_flame.add(flame)
     bullet_sprites = pygame.sprite.Group()
     world_sprites = pygame.sprite.Group()
+    scrolling_speed = 4
     for world in worlds:
         world_sprites.add(world)
     bullet_list = []
@@ -42,19 +43,24 @@ def startgame(run):
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
                     run = False
+                if event.key == pygame.K_LCTRL:
+                    scrolling_speed = 8
+            elif event.type == KEYUP:
+                if event.key == pygame.K_LCTRL:
+                    scrolling_speed = 4
             elif event.type == pygame.QUIT:
                 pygame.quit()
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 autofire = True
             elif event.type == pygame.MOUSEBUTTONUP:
                 autofire = False
-            elif event.type==pygame.MOUSEWHEEL:
-                fire_rate+=event.y*10
+            elif event.type == pygame.MOUSEWHEEL:
+                fire_rate += event.y*10
 
         screen.fill(black)
         world_sprites.draw(screen)
         for world in worlds:
-            world.scrolling(4)
+            world.scrolling(scrolling_speed)
             if world.pos.y > 1080:
                 worlds.remove(world)
                 worlds.append(World(world_test_image, (0, -2162)))
