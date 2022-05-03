@@ -30,7 +30,7 @@ def startgame(run):
     sprites_flame.add(flame)
     bullet_sprites = pygame.sprite.Group()
     world_sprites = pygame.sprite.Group()
-    scrolling_speed = 4
+    scrolling_speed = 3
     for world in worlds:
         world_sprites.add(world)
     bullet_list = []
@@ -44,10 +44,10 @@ def startgame(run):
                 if event.key == pygame.K_ESCAPE:
                     run = False
                 if event.key == pygame.K_LCTRL:
-                    scrolling_speed = 8
+                    scrolling_speed = 6
             elif event.type == KEYUP:
                 if event.key == pygame.K_LCTRL:
-                    scrolling_speed = 4
+                    scrolling_speed = 3
             elif event.type == pygame.QUIT:
                 pygame.quit()
             elif event.type == pygame.MOUSEBUTTONDOWN:
