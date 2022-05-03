@@ -2,7 +2,6 @@ from data import *
 
 
 class Player(pygame.sprite.Sprite):
-    # def __init__(self, player_image, pos):
     def __init__(self, pos):
         super().__init__()
         '''self.index2 = 1
@@ -18,7 +17,6 @@ class Player(pygame.sprite.Sprite):
         for i in range(0, 9):
             self.images.append(pygame.image.load(
                 f'gfx/plane{str(i+1)}.png'))
-        #self.image = player_image.convert_alpha()
         self.image = self.images[self.index].convert_alpha()
         self.mask = pygame.mask.from_surface(self.image)
         self.rect = self.image.get_rect()
