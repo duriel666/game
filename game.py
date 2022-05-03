@@ -23,14 +23,19 @@ def startgame(run):
     worlds = []
     worlds.append(World(world_test_image, (0, 0)))
     worlds.append(World(world_test_image, (0, -1080)))
-    #worlds.append(World(world_test_image, (0, -2160)))
+    worlds.append(World(world_test_image, (0, -2160)))
+    worlds.append(World(world_test_image, (0, -3240)))
+    worlds.append(World(world_test_image, (0, -4320)))
+    worlds.append(World(world_test_image, (0, -5400)))
+    worlds.append(World(world_test_image, (0, -6480)))
+    worlds.append(World(world_test_image, (0, -7560)))
     sprites = pygame.sprite.Group()
     sprites.add(player_one)
     sprites_flame = pygame.sprite.Group()
     sprites_flame.add(flame)
     bullet_sprites = pygame.sprite.Group()
     world_sprites = pygame.sprite.Group()
-    scrolling_speed = 1
+    scrolling_speed = 4
     for world in worlds:
         world_sprites.add(world)
     bullet_list = []
@@ -44,10 +49,10 @@ def startgame(run):
                 if event.key == pygame.K_ESCAPE:
                     run = False
                 if event.key == pygame.K_LCTRL:
-                    scrolling_speed = 2
+                    scrolling_speed = 8
             elif event.type == KEYUP:
                 if event.key == pygame.K_LCTRL:
-                    scrolling_speed = 1
+                    scrolling_speed = 4
             elif event.type == pygame.QUIT:
                 pygame.quit()
             elif event.type == pygame.MOUSEBUTTONDOWN:
@@ -61,11 +66,11 @@ def startgame(run):
         world_sprites.draw(screen)
         for world in worlds:
             world.scrolling(scrolling_speed)
-            if world.pos.y > 1080:
+            '''if world.pos.y > 1080:
                 worlds.remove(world)
                 worlds.append(
-                    World(world_test_image, (0, worlds[0].pos.y-1081)))
-                world_sprites.add(worlds[1])
+                    World(world_test_image, (0, worlds[0].pos.y-1080)))
+                world_sprites.add(worlds[1])'''
         sprites.update()
         sprites_flame.update(player_one.pos)
         sprites_flame.draw(screen)
