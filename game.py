@@ -26,6 +26,9 @@ def startgame(run):
     worlds.append(World(world_test_image, (0, -5400)))
     worlds.append(World(world_test_image, (0, -6480)))
     worlds.append(World(world_test_image, (0, -7560)))
+    worlds.append(World(world_test_image, (0, -8640)))
+    worlds.append(World(world_test_image, (0, -9720)))
+    worlds.append(World(world_test_image, (0, -10800)))
 
     sprites = pygame.sprite.Group()
     sprites.add(player_one)
@@ -40,6 +43,8 @@ def startgame(run):
     autofire = False
     shooting = 0
     fire_rate = 60
+    fire_rate_select = 0
+    fire_rates = [60, 120, 200, 540, 700, 900, 1400]
     while run:
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:
@@ -57,7 +62,13 @@ def startgame(run):
             elif event.type == pygame.MOUSEBUTTONUP:
                 autofire = False
             elif event.type == pygame.MOUSEWHEEL:
-                fire_rate += event.y*10
+                fire_rate_select += event.y*1
+                if fire_rate_select >= 0 and fire_rate_select < len(fire_rates):
+                    fire_rate = fire_rates[fire_rate_select]
+                elif fire_rate_select < 0:
+                    fire_rate_select = 0
+                elif fire_rate_select > len(fire_rates):
+                    fire_rate_select = len(fire_rates)
 
         screen.fill(black)
 
