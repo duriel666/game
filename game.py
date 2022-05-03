@@ -22,15 +22,15 @@ def startgame(run):
     flame = Flame((ww/2, wh/2))
     worlds = []
     worlds.append(World(world_test_image, (0, 0)))
-    worlds.append(World(world_test_image, (0, -1081)))
-    worlds.append(World(world_test_image, (0, -2162)))
+    worlds.append(World(world_test_image, (0, -1080)))
+    #worlds.append(World(world_test_image, (0, -2160)))
     sprites = pygame.sprite.Group()
     sprites.add(player_one)
     sprites_flame = pygame.sprite.Group()
     sprites_flame.add(flame)
     bullet_sprites = pygame.sprite.Group()
     world_sprites = pygame.sprite.Group()
-    scrolling_speed = 3
+    scrolling_speed = 1
     for world in worlds:
         world_sprites.add(world)
     bullet_list = []
@@ -44,10 +44,10 @@ def startgame(run):
                 if event.key == pygame.K_ESCAPE:
                     run = False
                 if event.key == pygame.K_LCTRL:
-                    scrolling_speed = 6
+                    scrolling_speed = 2
             elif event.type == KEYUP:
                 if event.key == pygame.K_LCTRL:
-                    scrolling_speed = 3
+                    scrolling_speed = 1
             elif event.type == pygame.QUIT:
                 pygame.quit()
             elif event.type == pygame.MOUSEBUTTONDOWN:
@@ -63,8 +63,9 @@ def startgame(run):
             world.scrolling(scrolling_speed)
             if world.pos.y > 1080:
                 worlds.remove(world)
-                worlds.append(World(world_test_image, (0, -2162)))
-                world_sprites.add(worlds[2])
+                worlds.append(
+                    World(world_test_image, (0, worlds[0].pos.y-1081)))
+                world_sprites.add(worlds[1])
         sprites.update()
         sprites_flame.update(player_one.pos)
         sprites_flame.draw(screen)

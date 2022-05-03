@@ -9,8 +9,8 @@ pygame.mixer.init()
 vec = pygame.Vector2
 clock = pygame.time.Clock()
 
-ww = 1600
-wh = 900
+ww = 1920
+wh = 1080
 gw = 1920
 gh = 1080
 
