@@ -44,7 +44,7 @@ def startgame(run):
     shooting = 0
     fire_rate = 60
     fire_rate_select = 0
-    fire_rates = [60, 120, 200, 540, 700, 900, 1400]
+    fire_rates = [60, 120, 200, 540, 700, 900, 1400, 1800, ]
     while run:
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:
