@@ -36,7 +36,8 @@ def startgame(run):
     sprites_flame.add(flame)
     bullet_sprites = pygame.sprite.Group()
     world_sprites = pygame.sprite.Group()
-    scrolling_speed = 4
+    scrolling_speed = 1
+    scrolling_count = 0
     for world in worlds:
         world_sprites.add(world)
     bullet_list = []
@@ -51,10 +52,10 @@ def startgame(run):
                 if event.key == pygame.K_ESCAPE:
                     run = False
                 if event.key == pygame.K_LCTRL:
-                    scrolling_speed = 8
+                    scrolling_speed = 2
             elif event.type == KEYUP:
                 if event.key == pygame.K_LCTRL:
-                    scrolling_speed = 4
+                    scrolling_speed = 1
             elif event.type == pygame.QUIT:
                 pygame.quit()
             elif event.type == pygame.MOUSEBUTTONDOWN:
@@ -80,6 +81,7 @@ def startgame(run):
                 worlds.append(
                     World(world_test_image, (0, -1080)))
                 world_sprites.add(worlds[1])'''
+        scrolling_count += scrolling_speed
         sprites.update()
         sprites_flame.update(player_one.pos)
         sprites_flame.draw(screen)
@@ -87,7 +89,7 @@ def startgame(run):
         if autofire:
             if shooting > 60/(fire_rate/60):
                 bullet = Bullet((player_one.rect.center), (mouse),
-                                50, bullet_image, 2, 900, 1)
+                                50, bullet_image, 2, 950, 1)
                 bullet_list.append(bullet)
                 bullet_sprites.add(bullet)
                 shooting = 0
@@ -108,11 +110,15 @@ def startgame(run):
         font.render_to(
             screen, (7, 103), f'bullets - {len(bullet_sprites)}', black)
         font.render_to(
+            screen, (7, 148), f'scroll - {scrolling_count}', black)
+        font.render_to(
             screen, (10, 10), f'fps - {clock.get_fps():,.2f}', white)
         font.render_to(
             screen, (10, 55), f'fire_rate - {fire_rate} per minute', white)
         font.render_to(
             screen, (10, 100), f'bullets - {len(bullet_sprites)}', white)
+        font.render_to(
+            screen, (10, 145), f'scroll - {scrolling_count}', white)
 
         mouse = pygame.mouse.get_pos()
         cursor_rect.center = mouse  # update position
