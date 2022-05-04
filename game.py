@@ -36,7 +36,7 @@ def startgame(run):
     sprites_flame.add(flame)
     bullet_sprites = pygame.sprite.Group()
     world_sprites = pygame.sprite.Group()
-    scrolling_speed = 1
+    scrolling_speed = 10
     scrolling_count = 0
     for world in worlds:
         world_sprites.add(world)
@@ -52,10 +52,10 @@ def startgame(run):
                 if event.key == pygame.K_ESCAPE:
                     run = False
                 if event.key == pygame.K_LCTRL:
-                    scrolling_speed = 2
+                    scrolling_speed = 20
             elif event.type == KEYUP:
                 if event.key == pygame.K_LCTRL:
-                    scrolling_speed = 1
+                    scrolling_speed = 10
             elif event.type == pygame.QUIT:
                 pygame.quit()
             elif event.type == pygame.MOUSEBUTTONDOWN:
@@ -81,6 +81,9 @@ def startgame(run):
                 worlds.append(
                     World(world_test_image, (0, -1080)))
                 world_sprites.add(worlds[1])'''
+        if worlds[len(worlds)-1].pos.y > 0:
+            scrolling_speed = 0
+            worlds[len(worlds)-1].pos.y = 0
         scrolling_count += scrolling_speed
         sprites.update()
         sprites_flame.update(player_one.pos)
@@ -103,6 +106,7 @@ def startgame(run):
         player_one.move_x()
         player_one.move_y()
 
+        # shadow
         font.render_to(
             screen, (7, 13), f'fps - {clock.get_fps():,.2f}', black)
         font.render_to(
@@ -111,6 +115,8 @@ def startgame(run):
             screen, (7, 103), f'bullets - {len(bullet_sprites)}', black)
         font.render_to(
             screen, (7, 148), f'scroll - {scrolling_count}', black)
+
+        # text
         font.render_to(
             screen, (10, 10), f'fps - {clock.get_fps():,.2f}', white)
         font.render_to(
