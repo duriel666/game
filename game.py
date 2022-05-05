@@ -4,7 +4,6 @@ from data import *
 from bullet import *
 
 font = pygame.freetype.Font('stuff/NHaasGroteskTXPro-55Rg.ttf', 40)
-
 pygame.mouse.set_visible(False)
 cursor = pygame.image.load('gfx/cursor.png').convert_alpha()
 cursor_rect = cursor.get_rect()
@@ -36,7 +35,7 @@ def startgame(run):
     sprites_flame.add(flame)
     bullet_sprites = pygame.sprite.Group()
     world_sprites = pygame.sprite.Group()
-    scrolling_speed = 10
+    scrolling_speed = 1
     scrolling_count = 0
     for world in worlds:
         world_sprites.add(world)
@@ -52,10 +51,10 @@ def startgame(run):
                 if event.key == pygame.K_ESCAPE:
                     run = False
                 if event.key == pygame.K_LCTRL:
-                    scrolling_speed = 20
+                    scrolling_speed = 2
             elif event.type == KEYUP:
                 if event.key == pygame.K_LCTRL:
-                    scrolling_speed = 10
+                    scrolling_speed = 1
             elif event.type == pygame.QUIT:
                 pygame.quit()
             elif event.type == pygame.MOUSEBUTTONDOWN:

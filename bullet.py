@@ -31,4 +31,4 @@ class Bullet(pygame.sprite.Sprite):
 
     def update(self):
         self.pos = (self.pos[0]-self.speed_x, self.pos[1]+self.speed_y)
-        self.rect.center = self.pos
+        self.rect.midbottom = self.pos
